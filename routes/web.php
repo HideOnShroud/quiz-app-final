@@ -1,6 +1,13 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Question;
+use App\Models\Quiz;
+use App\Models\User;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('/', MainController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -29,3 +34,20 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/add-question/{id}', function($id){
+    if(Auth::check()){
+        return view('add-question', compact('id'));
+    }
+});
+
+
+
+Route::get('/create-quiz/', function(){
+    if(Auth::check()){
+        return view('create-quiz');
+    }
+});
+
+
+Route::get('/acc', [AdminController::class, 'index']);

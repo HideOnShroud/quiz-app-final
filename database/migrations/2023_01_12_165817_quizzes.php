@@ -17,12 +17,12 @@ return new class extends Migration
             
             $table->id();
             $table->timestamps();
-            $table->unasignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->text('desc');
             $table->string('img')->nullable();
             $table->boolean('approved')->default(false);
-            $table->foreign('user_id')->references('id')->on('user');
+            $table->foreign('user_id')->references('id')->on('users');
             
         });
     }
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('quizzes');
     }
 };
