@@ -76,7 +76,7 @@
                             
                             <div>
                                 <h5 >{{$question->question}}</h5>
-                                <p ><strong>FOR</strong>: {{$allQuizzes->where('id', $question->quiz_id)->first()->title}}</p>
+                                <p ><strong>Of</strong>: {{$quizzes->where('id', $question->quiz_id)->first()->title}}</p>
                 
                                 <div>
                                     <a href="/edit-question/{{$question->id}}" >Edit</a>
