@@ -1,4 +1,3 @@
-const cover = document.querySelector('.cover');
 const startQuiz = document.getElementById('start-quiz-btn')
 const main = document.querySelector('#main')
 let counter = 0
@@ -20,7 +19,7 @@ function check(id) {
           if (counter+1 <= data.length){
           const element = data[counter]
           console.log(typeof(element.quiz_id))
-          main.innerHTML = `<div class="sdw p-4 mb-5 bg-white">
+          main.innerHTML = `<div>
           <h2>${element.question}</h2>
       </div>  
         <div>
