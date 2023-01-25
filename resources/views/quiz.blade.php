@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -19,20 +20,14 @@
                 {{ $quiz->desc }}
             </p>
         </div>
-        <div>
-            @foreach ($questions as $question)
-                <form action="">
-                    <p>{{ $question->question }}</p>
-                    <input type="radio" id="html" name="fav_language" value="HTML">
-                    <label for="html">{{ $question->answers }}</label><br>
-                    <input type="radio" id="css" name="fav_language" value="CSS">
-                    <label for="css">CSS</label><br>
-                    <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-                    <label for="javascript">JavaScript</label>
-                </form>
-                <p>{{ $question }}</p>
-            @endforeach
-        </div>
     </div>    
+    <div>
+        <button id='start-quiz-btn' onclick="check({{ $quiz->id }})">Start Quiz</button>
+        <a  id='go-back-btn' href="/">Go Back</a>
+    </div>
+    <div class="main">
+        
+    </div>
+    <script src="{{ asset('js/main.js')}}"></script>
 </body>
 </html>

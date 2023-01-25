@@ -25,10 +25,20 @@
           </div>
         </nav>
       </header>
-              <div >
-                  <a type="button" href='/create'>Create Quiz</a>
+            @if (Auth::check())
               
-              </div>
+            <div >
+              <a type="button" href='/create'>Create Quiz</a>
+              @if ($hasQuiz)
+                
+              <a type="button" href='/create-question'>Create Question</a>
+              
+                
+              @endif
+              
+            </div>
+            @endif
+            
     
        <div id="quiz-go" style="display:flex; flex-direction:column;">
         @foreach($quizzes as $quiz)
@@ -36,7 +46,7 @@
             <div >
               <img src="{{ $quiz->img }}"  alt="Card image cap">
               <div >
-                {{-- <a href="{{ route('quiz', ['id' => $quiz->id]) }}"><h5 class="card-title">{{ $quiz->title }}</h5></a> --}}
+                <a href="/quiz/{{ $quiz->id }}">{{ $quiz->title }}</a>
                 <p class="card-text">{{ $quiz->desc }}</p>
               </div>
               <div >

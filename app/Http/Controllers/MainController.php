@@ -18,9 +18,10 @@ class MainController extends Controller
     public function index()
     {
         $user = User::all();
+        $hasQuiz = Quiz::where('user_id', Auth::id());
         $quizzes = Quiz::where('approved', 1)->orderBy('created_at', 'desc')->get();
         $questions = Question::all();
-        return view('index', compact('quizzes', 'questions', 'user'));
+        return view('index', compact('quizzes', 'questions', 'user', 'hasQuiz'));
     }
 
     /**
@@ -60,9 +61,10 @@ class MainController extends Controller
      */
     public function show($id)
     {
-        if(Auth::check()){
-            return view('add-question', compact('id'));
-        }
+        $quiz = Quiz::where('id',$id)->first();
+        $questions = Question::where('quiz_id', $id)->get();
+        return view('quiz',compact('quiz','questions'));
+
     }
 
     /**
@@ -73,7 +75,8 @@ class MainController extends Controller
      */
     public function edit($id)
     {
-        //
+        $quizzes = Quiz::where('id', $id)->first();
+        return view('edit-quiz')->with('quizzes', $quizzes);
     }
 
     /**
@@ -85,7 +88,14 @@ class MainController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $quiz = Quiz::where('id', $id)->update([
+        'title' => $request->input('title'),
+        'desc' => $request->input('desc'),
+        'img' => $request->input('img'),
+        'user_id' => Auth::id()]);
+        
+        return redirect('/');
     }
 
     /**
@@ -96,6 +106,15 @@ class MainController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Quiz::destroy($id);
+        return redirect('/acc');
+    }
+
+    public function approve($id)
+    {
+        $quiz = Quiz::find($id);
+        $quiz->approved = 1;
+        $quiz->save();
+        return redirect('/');
     }
 }

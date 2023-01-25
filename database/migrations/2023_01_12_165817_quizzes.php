@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('desc');
             $table->string('img')->nullable();
             $table->boolean('approved')->default(false);
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             
         });
     }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuestionController;
 use App\Models\Question;
 use App\Models\Quiz;
 use App\Models\User;
@@ -35,19 +36,16 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/add-question/{id}', function($id){
-    if(Auth::check()){
-        return view('add-question', compact('id'));
-    }
-});
-
-
-
-Route::get('/create-quiz/', function(){
-    if(Auth::check()){
-        return view('create-quiz');
-    }
-});
-
 
 Route::get('/acc', [AdminController::class, 'index']);
+Route::get('/quiz/{id}', [MainController::class, 'show']);
+Route::post('create', [MainController::class, 'store']);
+Route::get('create-question', [QuestionController::class, 'create']);
+Route::post('create-question', [QuestionController::class, 'store']);
+Route::delete('/question/{id}', [QuestionController::class, 'destroy']);
+Route::get('/edit-question/{id}', [QuestionController::class, 'edit']);
+Route::put('/edit-question/{id}', [QuestionController::class, 'update']);
+Route::get('/edit-quiz/{id}', [MainController::class, 'edit']);
+Route::put('/edit-quiz/{id}', [MainController::class, 'update']);
+Route::patch('/approve/{id}', [MainController::class, 'approve']);
+Route::delete('/delete-quiz/{id}', [MainController::class, 'destroy']);

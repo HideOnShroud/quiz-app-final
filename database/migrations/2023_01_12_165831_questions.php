@@ -18,12 +18,15 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('question');
-            $table->json('answers');
-            $table->integer('position')->default(0);
+            $table->string('answer1');
+            $table->string('answer2');
+            $table->string('answer3');
+            $table->string('answer4');
+            $table->integer('position')->default(1);
             $table->unsignedBigInteger('quiz_id');
-            $table->foreign('quiz_id')->references('id')->on('quizzes');
+            $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('image')->nullable();
             $table->string('correct_answer');
             

@@ -9,9 +9,10 @@
     @if(Auth::id() !== 1)
         <div id='hide-quiz'>
         @foreach($curQuizzes as $quiz)
+
             <div>
                 <div>
-                    <h5>{{$quiz->title}}</h5>
+                    <h3>Quiz: {{$quiz->title}}</h5>
                     <p >{{$quiz->desc}}</p>
     
                     <div >
@@ -23,38 +24,32 @@
                         </form>
                         
                     </div>
+                    <div>
+                        <h4>Question</h3>
+                        @foreach ($curQuestions->where('quiz_id', $quiz->id) as $question)
+                        <h5 >{{$question->question}}</h5>
+                        <div >
+                            <a href="/edit-question/{{$question->id}}">Edit</a>
+                            <form action="/question/{{ $question->id }}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit">Delete</button>
+                            </form>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         @endforeach
         </div>
-        <div id='hide-question'>
-            @foreach($curQuestions as $question)
-                <div>
-                    
-                    <div>
-                        <h5 >{{$question->question}}</h5>
-                        <p ><strong>FOR</strong>: {{$curQuizzes->where('id', $question->quiz_id)->first()->title}}</p>
-        
-                        <div >
-                            <a href="/edit-question/{{$question->id}}">Edit</a>
-                            <form action="/delete-question/{{$question->id}}" method="POST">
-                                @csrf
-                                <button type="submit">Delete</button>
-                            </form>
-                            
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-            </div>
             @else
             <div id='hide-quiz'>
                 @foreach($quizzes as $quiz)
                     @if($quiz->approved)
+                    <h2>Quiz</h2>
                     <div>
                         
                         <div>
-                            <h5 >{{$quiz->title}}</h5>
+                            <h3 > Quiz: {{$quiz->title}}</h5>
                             <p >{{$quiz->description}}</p>
             
                             <div style="display: flex; flex-direction: row;">
@@ -66,6 +61,24 @@
                             </div>
                         </div>
                     </div>
+                    <h4>Questions</h4>
+                        @foreach ($curQuestions->where('quiz_id', $quiz->id) as $question)
+                            <div>
+                                
+                                <div>
+                                    <h5 >{{$question->question}}</h5>                    
+                                    <div>
+                                        <a href="/edit-question/{{$question->id}}" >Edit</a>
+                                        <form action="/question/{{ $question->id }}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                     @endif
                 @endforeach
                 </div>
@@ -76,12 +89,13 @@
                             
                             <div>
                                 <h5 >{{$question->question}}</h5>
-                                <p ><strong>Of</strong>: {{$quizzes->where('id', $question->quiz_id)->first()->title}}</p>
+                                <p >: {{$quizzes->where('id', $question->quiz_id)->first()->title}}</p>
                 
                                 <div>
                                     <a href="/edit-question/{{$question->id}}" >Edit</a>
-                                    <form action="/delete-question/{{$question->id}}" method="POST">
+                                    <form action="/question/{{ $question->id }}" method="POST">
                                         @csrf
+                                        @method('delete')
                                         <button type="submit">Delete</button>
                                     </form>
                                 </div>
@@ -101,10 +115,12 @@
                                 <div>
                                     <form action="/approve/{{$quiz->id}}" method="POST">
                                         @csrf
+                                        @method('patch')
                                         <button type="submit" >Approve</button>
                                     </form>
                                     <form action="/delete-quiz/{{$quiz->id}}" method="POST">
                                         @csrf
+                                        @method('delete')
                                         <button type="submit" >Delete</button>
                                     </form>
                                 </div>
