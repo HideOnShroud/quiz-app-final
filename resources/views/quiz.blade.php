@@ -25,7 +25,7 @@
         <button id='start-quiz-btn' onclick="check({{ $quiz->id }})">Start Quiz</button>
         <a  id='go-back-btn' href="/">Go Back</a>
     </div>
-    <div class="main">
+    <div id='main' class="main">
         
     </div>
     <script src="{{ asset('js/main.js')}}"></script>

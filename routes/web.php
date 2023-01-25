@@ -49,3 +49,13 @@ Route::get('/edit-quiz/{id}', [MainController::class, 'edit']);
 Route::put('/edit-quiz/{id}', [MainController::class, 'update']);
 Route::patch('/approve/{id}', [MainController::class, 'approve']);
 Route::delete('/delete-quiz/{id}', [MainController::class, 'destroy']);
+
+
+Route::get('/quizzes-api/{id}', function($id){
+    $questions = Question::where('id', $id)->get();
+    return $questions;
+});
+Route::get('/quiz-api/{id}', function($id){
+    $quiz = Question::where('quiz_id', $id)->orderBy('position', 'asc')->get();
+    return $quiz;
+});
