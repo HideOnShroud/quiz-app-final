@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    @vite('resources/css/app.css')
     <title>Document</title>
 </head>
 <body>
-    <div>
+    
+    <div class="mdiv">
         <img src="{{ $quiz->img }}" alt="f">
         <div>
             <h1>
@@ -23,7 +25,7 @@
     </div>    
     <div>
         <button id='start-quiz-btn' onclick="check({{ $quiz->id }})">Start Quiz</button>
-        <a  id='go-back-btn' href="/">Go Back</a>
+        <a class="text-white" id='go-back-btn' href="/">Go Back</a>
     </div>
     <div id='main' class="main">
         
